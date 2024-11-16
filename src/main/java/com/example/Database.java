@@ -62,13 +62,13 @@ public class Database implements Serializable {
     }
     public void updateAll(float radius) {
         List<Point> points = getAll();
+        Session session = getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
         for (Point point : points) {
             point.setR(radius);
             point.setIsHit(Checker.isHit(point.getX(), point.getY(), radius));
+            session.saveOrUpdate(point);
         }
-        Session session = getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.saveOrUpdate(points);
         tx1.commit();
         session.close();
     }

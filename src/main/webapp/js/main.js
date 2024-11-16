@@ -48,6 +48,7 @@ function drawPoint(x, y, r, result) {
 }
 document.getElementById('graph-svg').addEventListener('click', function(event) {
     // let r = parseFloat(document.getElementById('j_idt7:rValue_label').innerText);
+    console.log("Hello!!!")
     let r = document.getElementById('rValue');
     if (!r || isNaN(r)) {
         console.error("Invalid R value");
