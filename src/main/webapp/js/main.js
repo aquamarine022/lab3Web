@@ -48,29 +48,40 @@ function drawPoint(x, y, r, result) {
 }
 document.getElementById('graph-svg').addEventListener('click', function(event) {
     // let r = parseFloat(document.getElementById('j_idt7:rValue_label').innerText);
-    console.log("Hello!!!")
-    let r = document.getElementById('rValue');
-    if (!r || isNaN(r)) {
+    let r = document.getElementsByClassName('rValueClass')[0].value;
+    console.log(r);
+    if (r === 0) {
         console.error("Invalid R value");
         return;
     }
     const svg = event.currentTarget;
-    const rect = svg.getBoundingClientRect();
-
-    const clickX = event.clientX - rect.left;
-    const clickY = event.clientY - rect.top;
-    const scaleFactor = 150 / r;
-
-    const x = ((clickX - 200) / scaleFactor);
-    const y = -((clickY - 200) / scaleFactor);
+    var pt = svg.createSVGPoint()
+    pt.x = event.clientX
+    pt.y = event.clientY
+    var cursorpt = pt.matrixTransform(svg.getScreenCTM().inverse())
+    let [x,y] = [cursorpt.x,cursorpt.y]
+    console.log([x, y]);
+    x=(x-200)/150;
+    y=-(y-200)/150;
+    x*=r
+    y*=r
+    x = x.toFixed (3);
+    y = y.toFixed (3);
+    //const rect = svg.getBoundingClientRect();
+    // const clickX = event.clientX - rect.left;
+    // const clickY = event.clientY - rect.top;
+    // const scaleFactor = 150 / r;
+    //
+    // const x = ((clickX - 200) / scaleFactor);
+    // const y = -((clickY - 200) / scaleFactor);
 
     if (y < -5 || y > 5) {
         console.error("Y value is out of range");
         return;
     }
-    document.getElementById('j_idt7:j_idt10_hinput').value = x;
-    document.getElementById('j_idt7:yValue').value = y;
-    document.getElementById('j_idt7:j_idt21').click();
+    document.getElementsByClassName('yValueClass')[0].value = y;
+    document.getElementsByClassName('xValueClass')[0].value = x;
+    document.getElementsByClassName('Submit')[0].click();
 });
 
 window.onload = getValuesFromTable();
