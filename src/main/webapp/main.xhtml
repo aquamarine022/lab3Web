@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Lab3</title>
+</h:head>
+
+<h:body>
+    <header id="mainpage-header">
+        <h1>Брель Мария P3207 | Вариант 430334</h1>
+    </header>
+    <div id="upper-container">
+    <div id="graphContainer">
+        <svg id="graph-svg" width="400" height="400" viewBox="-200 -200 400 400" xmlns="http://www.w3.org/2000/svg">
+            <line x1="-200" y1="0" x2="200" y2="0" stroke="black"></line>
+            <line x1="0" y1="200" x2="0" y2="-200" stroke="black"></line>
+            <line x1="-150" y1="-5" x2="-150" y2="5" stroke="black"></line>
+            <text id="label-minus-r" x="-160" y="20" font-size="20">-R</text>
+            <line x1="-75" y1="-5" x2="-75" y2="5" stroke="black"></line>
+            <text id="label-minus-half-r" x="-85" y="20" font-size="20">-R/2</text>
+            <line x1="150" y1="-5" x2="150" y2="5" stroke="black"></line>
+            <text id="label-r" x="140" y="20" font-size="20">R</text>
+            <line x1="75" y1="-5" x2="75" y2="5" stroke="black"></line>
+            <text id="label-half-r" x="65" y="20" font-size="20">R/2</text>
+            <line x1="-5" y1="150" x2="5" y2="150" stroke="black"></line>
+            <text id="label-minus-r-y" x="10" y="155" font-size="20">-R</text>
+            <line x1="-5" y1="75" x2="5" y2="75" stroke="black"></line>
+            <text id="label-minus-half-r-y" x="10" y="80" font-size="20">-R/2</text>
+            <line x1="-5" y1="-150" x2="5" y2="-150" stroke="black"></line>
+            <text id="label-r-y" x="10" y="-140" font-size="20">R</text>
+            <line x1="-5" y1="-75" x2="5" y2="-75" stroke="black"></line>
+            <text id="label-half-r-y" x="10" y="-65" font-size="20">R/2</text>
+            <polygon points="0,0 0, -150 75,0" fill-opacity="0.6" stroke="navy" fill="blue"></polygon>
+            <path d="M 0 0 H -150 A 150 150 0 0 0 0 150" stroke="navy" fill="blue" fill-opacity="0.6"></path>
+            <rect x="-75" y="-150" width="75" height="150" fill-opacity="0.6" stroke="navy" fill="blue"></rect>
+            <polygon points="200,0 190,5 190,-5" fill="black"></polygon>
+            <polygon points="0,-200 -5,-190 5,-190" fill="black"></polygon>
+            <text x="180" y="20" font-size="20">x</text>
+            <text x="-40" y="-180" font-size="20">y</text>
+        </svg>
+
+    </div>
+    <h:form id="inputForm">
+        <h:panelGrid columns="3">
+            <h:outputLabel for="xValue" value="Введите X:" />
+            <p:selectOneRadio id="xValue" value="#{pointBean.x}" required="true" requiredMessage="Выберите значение X">
+                <f:selectItem itemValue="-3.0" itemLabel="-3.0"/>
+                <f:selectItem itemValue="-2.0" itemLabel="-2.0"/>
+                <f:selectItem itemValue="-1.0" itemLabel="-1.0"/>
+                <f:selectItem itemValue="0.0" itemLabel="0.0"/>
+                <f:selectItem itemValue="1.0" itemLabel="1.0"/>
+                <f:selectItem itemValue="2.0" itemLabel="2.0"/>
+                <f:selectItem itemValue="3.0" itemLabel="3.0"/>
+                <f:selectItem itemValue="4.0" itemLabel="4.0"/>
+                <f:selectItem itemValue="5.0" itemLabel="5.0"/>
+            </p:selectOneRadio>
+        </h:panelGrid>
+        <h:panelGrid columns="2" style="margin-bottom: 20px;">
+            <h:outputLabel for="yValue" value="Введите Y:" />
+            <h:inputText id="yValue" value="#{pointBean.y}" required="true">
+                <f:validateDoubleRange minimum="-5.0" maximum="5.0" />
+            </h:inputText>
+        </h:panelGrid>
+        <h:panelGrid columns="1" >
+            <p:slider id="rValueDisplay" for="rValue" minValue="1" maxValue="4" step="0.25">
+                <p:ajax process="rValue"/>
+            </p:slider>
+            <p:inputText id="rValue" value="#{pointBean.r}">
+            </p:inputText>
+        </h:panelGrid>
+
+        <h:commandButton value="Отправить" >
+            <f:ajax execute="@form" listener="#{formBean.processForm(pointBean)}" render="resultTable"/>
+        </h:commandButton>
+    </h:form>
+
+    </div>
+    <h:dataTable id="resultTable" value="#{resultBean.results}" var="point" border="1">
+        <h:column>
+            <f:facet name="header">X</f:facet>
+            <h:outputText value="#{point.x}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">Y</f:facet>
+            <h:outputText value="#{point.y}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="R" />
+            </f:facet>
+            <h:outputText value="#{point.r}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="Hit" />
+            </f:facet>
+            <h:outputText value="#{point.isHit ? 'Hit' : 'Miss'}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="Execution Time" />
+            </f:facet>
+            <h:outputText value="#{point.executionTime}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="Current Time" />
+            </f:facet>
+            <h:outputText value="#{point.createdAt}">
+                <f:convertDateTime pattern="HH:mm:ss dd/MM/yyyy" />
+            </h:outputText>
+        </h:column>
+    </h:dataTable>
+    <script type="text/javascript" src="js/main.js"></script>
+</h:body>
+</html>
