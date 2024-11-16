@@ -2,21 +2,16 @@ package com.example;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.Date;
-
 @Named("pointBean")
 @RequestScoped
 @Entity
 @Table(name = "point")
 public class Point {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "x", nullable = false)

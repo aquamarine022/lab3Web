@@ -5,43 +5,71 @@ import java.util.List;
 
 import com.example.Utils.Checker;
 import jakarta.enterprise.context.SessionScoped;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
-import jakarta.transaction.Transactional;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
 
 @SessionScoped
 public class Database implements Serializable {
-    @PersistenceContext(unitName = "default")
-    private EntityManager entityManager;
+    private static SessionFactory sessionFactory;
+    public Database()
+    {
 
-    @Transactional
-    public void addPoint(Point point) {
-        entityManager.persist(point);
     }
-    @Transactional
-    public void removePoint(Point point) {
-        Point managedPoint = entityManager.find(Point.class, point.getId());
-        if (managedPoint != null) {
-            entityManager.remove(managedPoint);
+    public static SessionFactory getSessionFactory()
+    {
+        if (sessionFactory == null) {
+            try {
+                Configuration configuration = new Configuration().configure();
+                configuration.addAnnotatedClass(Point.class);
+                StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
+                sessionFactory = configuration.buildSessionFactory(builder.build());
+            } catch (Exception e) {
+                System.out.println("Some problems: " + e);
+            }
         }
+        return sessionFactory;
     }
-
-    @Transactional
-    public List<Point> getAllPoints() {
-        TypedQuery<Point> query = entityManager.createQuery("SELECT p FROM Point p", Point.class);
-        return query.getResultList();
+    public Point getById(int id)
+    {
+        Session session = getSessionFactory().openSession();
+        var res = session.get(Point.class, id);
+        session.close();
+        return res;
     }
-    @Transactional
-    public void updateAllPoints(float radius) {
-        List<Point> points = getAllPoints();
+    public List<Point> getAll()
+    {   Session session = getSessionFactory().openSession();
+        var res = session.createQuery("from Point").list();
+        System.out.println("Got list of points: " + res.size());
+        session.close();
+        return res;
+    }
+    public void save(Point point) {
+        Session session = getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.save(point);
+        tx1.commit();
+        session.close();
+    }
+    public void clear() {
+        Session session = getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.createQuery("delete from Point").executeUpdate();
+        tx1.commit();
+        session.close();
+    }
+    public void updateAll(float radius) {
+        List<Point> points = getAll();
         for (Point point : points) {
             point.setR(radius);
             point.setIsHit(Checker.isHit(point.getX(), point.getY(), radius));
         }
-    }
-    @Transactional
-    public void removeAllPoints() {
-        entityManager.createQuery("DELETE FROM Point").executeUpdate();
+        Session session = getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.saveOrUpdate(points);
+        tx1.commit();
+        session.close();
     }
 }
