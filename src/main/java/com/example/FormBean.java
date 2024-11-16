@@ -24,17 +24,17 @@ public class FormBean {
         long endTime = System.nanoTime();
         point.setExecutionTime(endTime - startTime);
         if (shouldUpdateAllPoints(point.getR())) {
-            databaseService.updateAllPoints(point.getR());
+            databaseService.updateAll(point.getR());
             resultBean.updatePoints(point.getR());
         }
-        databaseService.addPoint(point); 
+        databaseService.save(point);
         resultBean.addResult(point);
     }
     private boolean shouldUpdateAllPoints(float radius) {
         return !resultBean.getResults().isEmpty() && resultBean.getResults().get(0).getR() != radius;
     }
     public void processClean() {
-        databaseService.removeAllPoints();
+        databaseService.clear();
         resultBean.clearPoints();
     }
 }
