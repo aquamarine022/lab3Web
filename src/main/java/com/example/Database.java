@@ -22,10 +22,8 @@ public class Database implements Serializable {
     {
         if (sessionFactory == null) {
             try {
-                Configuration configuration = new Configuration().configure();
-                configuration.addAnnotatedClass(Point.class);
-                StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
-                sessionFactory = configuration.buildSessionFactory(builder.build());
+                Configuration configuration = new Configuration().configure("/META-INF/hibernate.cfg.xml");
+                sessionFactory = configuration.buildSessionFactory();
             } catch (Exception e) {
                 System.out.println("Some problems: " + e);
             }

@@ -19,40 +19,43 @@
         </h:form>
     </header>
     <div id="upper-container" class="first-row">
-    <h:form id="inputForm">
-        <h:panelGrid columns="4">
-            <h:outputLabel for="xValue" value="Введите X:" />
-            <p:selectOneRadio class="x-checker" id="xValue" value="#{pointBean.x}" required="true" requiredMessage="Выберите значение X">
-                <f:selectItem itemValue="-3.0" itemLabel="-3.0"/>
-                <f:selectItem itemValue="-2.0" itemLabel="-2.0"/>
-                <f:selectItem itemValue="-1.0" itemLabel="-1.0"/>
-                <f:selectItem itemValue="0.0" itemLabel="0.0"/>
-                <f:selectItem itemValue="1.0" itemLabel="1.0"/>
-                <f:selectItem itemValue="2.0" itemLabel="2.0"/>
-                <f:selectItem itemValue="3.0" itemLabel="3.0"/>
-                <f:selectItem itemValue="4.0" itemLabel="4.0"/>
-                <f:selectItem itemValue="5.0" itemLabel="5.0"/>
-            </p:selectOneRadio>
-        </h:panelGrid>
-        <h:panelGrid columns="2" style="margin-bottom: 20px;">
-            <h:outputLabel for="yValue" value="Введите Y:" />
-            <h:inputText class="input_y" id="yValue" value="#{pointBean.y}" required="true">
-                <f:validateDoubleRange minimum="-5.0" maximum="5.0" />
-            </h:inputText>
-            <h:message for="yValue" style="color: red;" value="Y от -5 до 5">Y от -5 до 5</h:message>
-        </h:panelGrid>
-        <h:panelGrid columns="1" >
-            <p:slider id="rValueDisplay" for="rValue" minValue="1" maxValue="4" step="0.25">
-                <p:ajax process="rValue"/>
-            </p:slider>
-            <p:inputText id="rValue" value="#{pointBean.r}" style="margin-bottom: 20px">
-            </p:inputText>
-        </h:panelGrid>
+        <h:form id="inputForm">
+            <h:panelGrid columns="4">
+                <h:outputLabel for="xValue" value="Введите X:"/>
+                <h:inputText
+                        class="input_y"
+                        id="xValue"
+                        value="#{pointBean.x}"
+                        required="true"
+                        validatorMessage="Значение должно быть в пределах от -3 до 5"
+                        converterMessage="Значение должно быть дробным числом">
+                    <f:validateLongRange minimum="-3" maximum="5"/>
+                </h:inputText>
+            </h:panelGrid>
+            <h:panelGrid columns="2" style="margin-bottom: 20px;">
+                <h:outputLabel for="yValue" value="Введите Y:"/>
+                <h:inputText
+                        class="input_y"
+                        id="yValue"
+                        value="#{pointBean.y}"
+                        required="true"
+                        validatorMessage="Значение должно быть в пределах от -5 до 5"
+                        converterMessage="Значение должно быть дробным числом">
+                    <f:validateDoubleRange minimum="-5.0" maximum="5.0"/>
+                </h:inputText>
+            </h:panelGrid>
+            <h:panelGrid columns="1">
+                <p:slider id="rValueDisplay" for="rValue" minValue="1" maxValue="4" step="0.25">
+                    <p:ajax process="rValue" />
+                </p:slider>
+                <p:inputText id="rValue" value="#{pointBean.r}" style="margin-bottom: 20px">
+                </p:inputText>
+            </h:panelGrid>
 
-        <h:commandButton value="Отправить">
-            <f:ajax execute="@form" listener="#{formBean.processForm(pointBean)}" render="resultTable" oncomplete="getValuesFromTable()"/>
-        </h:commandButton>
-    </h:form>
+            <h:commandButton value="Отправить" id="submit_button">
+                <f:ajax execute="@form" listener="#{formBean.processForm(pointBean)}" render="resultTable graph-svg"/>
+            </h:commandButton>
+        </h:form>
 
         <div id="graphContainer" style="margin-left: 140px">
             <svg id="graph-svg" width="400" height="400" viewBox="-200 -200 400 400" xmlns="http://www.w3.org/2000/svg">
@@ -82,42 +85,41 @@
                 <text x="180" y="20" font-size="20">x</text>
                 <text x="-40" y="-180" font-size="20">y</text>
             </svg>
-
         </div>
     </div>
     <h:dataTable class="resTable" id="resultTable" value="#{resultBean.results}" var="point" border="1">
         <h:column>
             <f:facet name="header">X</f:facet>
-            <h:outputText value="#{point.x}" />
+            <h:outputText value="#{point.x}"/>
         </h:column>
         <h:column>
             <f:facet name="header">Y</f:facet>
-            <h:outputText value="#{point.y}" />
+            <h:outputText value="#{point.y}"/>
         </h:column>
         <h:column>
             <f:facet name="header">
-                <h:outputText value="R" />
+                <h:outputText value="R"/>
             </f:facet>
-            <h:outputText value="#{point.r}" />
+            <h:outputText value="#{point.r}"/>
         </h:column>
         <h:column>
             <f:facet name="header">
-                <h:outputText value="Hit" />
+                <h:outputText value="Hit"/>
             </f:facet>
-            <h:outputText value="#{point.isHit ? 'Hit' : 'Miss'}" />
+            <h:outputText value="#{point.isHit ? 'Hit' : 'Miss'}"/>
         </h:column>
         <h:column>
             <f:facet name="header">
-                <h:outputText value="Execution Time" />
+                <h:outputText value="Execution Time"/>
             </f:facet>
-            <h:outputText value="#{point.executionTime}" />
+            <h:outputText value="#{point.executionTime}"/>
         </h:column>
         <h:column>
             <f:facet name="header">
-                <h:outputText value="Current Time" />
+                <h:outputText value="Current Time"/>
             </f:facet>
             <h:outputText value="#{point.createdAt}">
-                <f:convertDateTime pattern="HH:mm:ss dd/MM/yyyy" />
+                <f:convertDateTime pattern="HH:mm:ss dd/MM/yyyy"/>
             </h:outputText>
         </h:column>
     </h:dataTable>

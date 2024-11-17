@@ -22,7 +22,7 @@ public class Point {
     private float y;
 
     @Column(name = "r", nullable = false)
-    private float r;
+    private float r = 1;
 
     @Column(name = "isHit", nullable = false)
     private boolean isHit;
