@@ -1,0 +1,59 @@
+*{
+    /*border: 1px solid green;*/
+}
+
+header{
+    top: 0;
+    height: 90px;
+    width: 100%;
+    padding: 10px 0 0 0;
+    text-align: center;
+    margin: 0;
+    position: fixed;
+    background-color: rgb(107, 163, 209);
+    z-index: 1000;
+}
+
+header h1{
+    font-family: cursive;
+    color: white;
+    margin: 10px 0;
+    padding: 0;
+    font-size: 19px;
+}
+
+header:hover{
+    box-shadow: 0 0 50px rgb(107, 163, 209);
+}
+
+header h1:hover{
+    transform: scale(1.2);
+}
+
+html{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: rgba(128, 191, 240, 0.5);
+    display: grid;
+    place-items: center;
+    flex-direction: column;
+    grid-template-rows: 1fr auto;
+
+}
+input[type="submit"]{
+    background-color: rgb(107, 163, 209);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    width: 150px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}

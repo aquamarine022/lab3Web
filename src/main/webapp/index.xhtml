@@ -6,20 +6,21 @@
 
 <h:head>
    <title>Lab3</title>
+   <link rel="stylesheet" href="css/main.css" type="text/css"/>
 </h:head>
 <h:body>
    <header id="welcomepage-header">
       <h1>Лабораторная работа 3, вариант: 430334</h1>
       <div id="credit">
-         <a href="">Брель Мария Владимировна | P3207</a>
+         <a class="link" href="https://github.com/aquamarine022/lab3Web/tree/master/src/main">Брель Мария Владимировна | P3207</a>
       </div>
    </header>
 
-   <div id="clock"> </div>
+   <div id="clock" style="margin-top: 200px"> </div>
 
    <br/>
    <h:form>
-      <h:commandButton value="Main page" action="main.xhtml" styleClass="mainPageButton" style="font-size: 18px; font-family: monospace; color: #333; background-color: #fafafa; border: 2px solid black; border-radius: 10px; padding: 10px 20px; cursor: pointer; transition: background-color 0.3s ease-in-out, color 0.3s ease; outline: none; display: block; margin: 20px auto; width: auto; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" />
+      <h:commandButton value="На главную" action="main.xhtml" styleClass="mainPageButton" />
    </h:form>
 
    <script src="js/clock.js"></script>

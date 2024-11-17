@@ -67,13 +67,6 @@ document.getElementById('graph-svg').addEventListener('click', function(event) {
     y*=r
     x = x.toFixed (3);
     y = y.toFixed (3);
-    //const rect = svg.getBoundingClientRect();
-    // const clickX = event.clientX - rect.left;
-    // const clickY = event.clientY - rect.top;
-    // const scaleFactor = 150 / r;
-    //
-    // const x = ((clickX - 200) / scaleFactor);
-    // const y = -((clickY - 200) / scaleFactor);
 
     if (y < -5 || y > 5) {
         console.error("Y value is out of range");
@@ -85,3 +78,4 @@ document.getElementById('graph-svg').addEventListener('click', function(event) {
 });
 
 window.onload = getValuesFromTable();
+

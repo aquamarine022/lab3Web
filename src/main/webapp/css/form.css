@@ -1,0 +1,37 @@
+.first-row{
+    display: flex;
+    flex-direction: row;
+    padding: 50px;
+    width: 70%;
+    margin-top: 110px;
+    margin-bottom: 20px;
+    border-radius: 30px;
+    background-color: rgba(128, 191, 240, 0.5);
+    flex: 1;
+}
+
+.first-row:hover{
+    box-shadow: 0 0 50px rgb(128, 191, 240);
+}
+
+
+.input_y {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    max-width: 80px;
+}
+
+.input_y:focus{
+    border-color: #4CAF50;
+    outline: none;
+}
+
+.x-checker{
+    width: 150px;
+}
+
+#upper_container{
+    margin-top: 30px;
+}

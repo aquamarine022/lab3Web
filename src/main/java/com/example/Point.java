@@ -35,15 +35,6 @@ public class Point {
 
     public Point() {}
 
-//    public Point(float x, float y, float r, boolean isHit, Date createdAt, long executionTime) {
-//        this.x = x;
-//        this.y = y;
-//        this.r = r;
-//        this.isHit = isHit;
-//        this.createdAt = createdAt;
-//        this.executionTime = executionTime;
-//    }
-
     public long getId() { return id; }
     public float getX() { return x; }
     public void setX(float x) { this.x = x; }
