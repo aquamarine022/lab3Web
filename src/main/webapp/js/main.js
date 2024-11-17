@@ -1,4 +1,4 @@
-function getValuesFromTable(data) {
+function getValuesFromTable() {
     clearPoints();
     const table = document.getElementById('resultTable');
 
@@ -48,23 +48,32 @@ function drawPoint(x, y, r, result) {
 }
 document.getElementById('graph-svg').addEventListener('click', function(event) {
     // let r = parseFloat(document.getElementById('j_idt7:rValue_label').innerText);
-    let r = document.getElementsByClassName('rValueClass')[0].value;
-    console.log(r);
+    let r = document.getElementById('inputForm:rValue').value;
+    // console.log(r);
     if (r === 0) {
         console.error("Invalid R value");
         return;
     }
     const svg = event.currentTarget;
-    var pt = svg.createSVGPoint()
-    pt.x = event.clientX
-    pt.y = event.clientY
-    var cursorpt = pt.matrixTransform(svg.getScreenCTM().inverse())
-    let [x,y] = [cursorpt.x,cursorpt.y]
-    console.log([x, y]);
-    x=(x-200)/150;
-    y=-(y-200)/150;
-    x*=r
-    y*=r
+    const rect = svg.getBoundingClientRect();
+    const clickX = event.clientX - rect.left;
+    const clickY = event.clientY - rect.top;
+    const scaleFactor = 150 / r;
+
+    let x = ((clickX - 200) / scaleFactor);
+    let y = -((clickY - 200) / scaleFactor);
+
+    // var pt = svg.createSVGPoint()
+    // pt.x = event.clientX
+    // pt.y = event.clientY
+    // var cursorpt = pt.matrixTransform(svg.getScreenCTM().inverse())
+    // let [x,y] = [cursorpt.x,cursorpt.y]
+    // console.log([x, y]);
+    // x=(x-200)/150;
+    // y=-(y-200)/150;
+    // x*=r
+    // y*=r
+    // console.log(x, y);
     x = x.toFixed (3);
     y = y.toFixed (3);
 
@@ -72,9 +81,10 @@ document.getElementById('graph-svg').addEventListener('click', function(event) {
         console.error("Y value is out of range");
         return;
     }
-    document.getElementsByClassName('yValueClass')[0].value = y;
-    document.getElementsByClassName('xValueClass')[0].value = x;
-    document.getElementsByClassName('Submit')[0].click();
+
+    document.getElementById('inputForm:xValue').value = x;
+    document.getElementById('inputForm:yValue').value = y;
+    document.getElementById('inputForm:submit_button').click();
 });
 
 window.onload = getValuesFromTable();

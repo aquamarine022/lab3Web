@@ -4,6 +4,7 @@ import com.example.Utils.Checker;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import org.primefaces.PrimeFaces;
 
 import java.util.Date;
 
@@ -29,6 +30,8 @@ public class FormBean {
         }
         databaseService.save(point);
         resultBean.addResult(point);
+
+        PrimeFaces.current().executeScript("getValuesFromTable();");
     }
     private boolean shouldUpdateAllPoints(float radius) {
         return !resultBean.getResults().isEmpty() && resultBean.getResults().get(0).getR() != radius;

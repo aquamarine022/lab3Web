@@ -7,10 +7,13 @@
     <session-factory>
         <!-- Database connection settings -->
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/studs</property>
-        <property name="hibernate.connection.username">s408322</property>
-        <property name="hibernate.connection.password">Z6sputo3kgQvoRep</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/postgres</property>
+        <property name="hibernate.connection.username">postgres</property>
+        <property name="hibernate.connection.password">29082006</property>
         <property name="show_sql">true</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+
+        <mapping class="com.example.Point"/>
     </session-factory>
 </hibernate-configuration>
