@@ -42,7 +42,7 @@
             <h:message for="yValue" style="color: red;" value="Y от -5 до 5">Y от -5 до 5</h:message>
         </h:panelGrid>
         <h:panelGrid columns="1" >
-            <p:slider id="rValueDisplay" for="rValue" minValue="1" maxValue="4" step="0.25">
+            <p:slider id="rValueDisplay" for="rValue" minValue="1" maxValue="4" step="0.25" onSlideEnd="redraw()">
                 <p:ajax process="rValue"/>
             </p:slider>
             <p:inputText id="rValue" value="#{pointBean.r}" style="margin-bottom: 20px">
@@ -53,36 +53,9 @@
             <f:ajax execute="@form" listener="#{formBean.processForm(pointBean)}" render="resultTable" oncomplete="getValuesFromTable()"/>
         </h:commandButton>
     </h:form>
-
-        <div id="graphContainer" style="margin-left: 140px">
-            <svg id="graph-svg" width="400" height="400" viewBox="-200 -200 400 400" xmlns="http://www.w3.org/2000/svg">
-                <line x1="-200" y1="0" x2="200" y2="0" stroke="black"></line>
-                <line x1="0" y1="200" x2="0" y2="-200" stroke="black"></line>
-                <line x1="-150" y1="-5" x2="-150" y2="5" stroke="black"></line>
-                <text id="label-minus-r" x="-160" y="20" font-size="20">-R</text>
-                <line x1="-75" y1="-5" x2="-75" y2="5" stroke="black"></line>
-                <text id="label-minus-half-r" x="-85" y="20" font-size="20">-R/2</text>
-                <line x1="150" y1="-5" x2="150" y2="5" stroke="black"></line>
-                <text id="label-r" x="140" y="20" font-size="20">R</text>
-                <line x1="75" y1="-5" x2="75" y2="5" stroke="black"></line>
-                <text id="label-half-r" x="65" y="20" font-size="20">R/2</text>
-                <line x1="-5" y1="150" x2="5" y2="150" stroke="black"></line>
-                <text id="label-minus-r-y" x="10" y="155" font-size="20">-R</text>
-                <line x1="-5" y1="75" x2="5" y2="75" stroke="black"></line>
-                <text id="label-minus-half-r-y" x="10" y="80" font-size="20">-R/2</text>
-                <line x1="-5" y1="-150" x2="5" y2="-150" stroke="black"></line>
-                <text id="label-r-y" x="10" y="-140" font-size="20">R</text>
-                <line x1="-5" y1="-75" x2="5" y2="-75" stroke="black"></line>
-                <text id="label-half-r-y" x="10" y="-65" font-size="20">R/2</text>
-                <polygon points="0,0 0, -150 75,0" fill-opacity="0.6" stroke="navy" fill="blue"></polygon>
-                <path d="M 0 0 H -150 A 150 150 0 0 0 0 150" stroke="navy" fill="blue" fill-opacity="0.6"></path>
-                <rect x="-75" y="-150" width="75" height="150" fill-opacity="0.6" stroke="navy" fill="blue"></rect>
-                <polygon points="200,0 190,5 190,-5" fill="black"></polygon>
-                <polygon points="0,-200 -5,-190 5,-190" fill="black"></polygon>
-                <text x="180" y="20" font-size="20">x</text>
-                <text x="-40" y="-180" font-size="20">y</text>
-            </svg>
-
+        <div id="graph_div">
+            <canvas id="graph" width="400" height="400">
+            </canvas>
         </div>
     </div>
     <h:dataTable class="resTable" id="resultTable" value="#{resultBean.results}" var="point" border="1">
@@ -122,5 +95,7 @@
         </h:column>
     </h:dataTable>
     <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/graph.js"></script>
+<!--    <h:outputScript  name="js/graph.js"/>-->
 </h:body>
 </html>
