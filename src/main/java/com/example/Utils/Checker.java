@@ -6,7 +6,7 @@ public class Checker {
     }
 
     public static boolean inSquare(float x, float y, float r) {
-        return x <= 0 && y >= 0 && x >= r/2 && y <= r;
+        return x <= 0 && y >= 0 && x >= -r/2 && y <= r;
     }
     public static boolean inTriangle(float x, float y, float r) {
         return x >= 0 && y >= 0 && x <= r/2 && y <= r && y <= r - 2*x;

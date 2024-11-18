@@ -210,7 +210,7 @@ function drawPoints(){
             let ptCoords = convertToCanvas(x, y);
             console.log(ptCoords[0],ptCoords[1]);
             if(i===rows.length-1){
-                if(cells[3].innerText==='true'){
+                if(cells[3].innerText==='Hit'){
                     context.strokeStyle='green';
                     context.fillStyle='green';
                 }else{
@@ -233,53 +233,38 @@ function drawPoints(){
 function convertToCanvas(x,y){
     return [(x*height)/5, (-y*height)/5];
 }
-// graph.addEventListener("mousedown", function (e) {
-//     document.getElementById("inputForm:submit_button").disabled = true;
-//
-//     var mouseX = parseFloat(e.clientX);
-//     var mouseY = parseFloat(e.clientY);
-//     var graphRect = graph.getBoundingClientRect();
-//     var seX = (mouseX - graphRect.left - graph.width / 2) / height * 5;
-//     var seY = -(mouseY - graphRect.top - graph.height / 2) / height * 5;
-//
-//     document.getElementById("inputForm:x_value").value = seX;
-//     document.getElementById("inputForm:yValue").value = seY;
-//
-//     document.getElementById("inputForm:x_value").dispatchEvent(new Event('change'));
-//     document.getElementById("inputForm:yValue").dispatchEvent(new Event('change'));
-//
-//     let count1 = 0;
-//     let count2 = 0;
-//
-//     faces.ajax.addOnEvent(function (data) {
-//         if (data.status === 'success' && (data.source.id === 'inputForm:x_value' || data.source.id === "inputForm:yValue")) {
-//             if (data.source.id === 'inputForm:x_value') { count1++; }
-//             if (data.source.id === "inputForm:yValue") { count2++; }
-//
-//             if (count1 > 0 && count2 > 0) {
-//                 document.getElementById("inputForm:submit_button").dispatchEvent(new Event('click'));
-//
-//                 faces.ajax.addOnEvent(function (newData) {
-//                     if (newData.status === 'success' && newData.source.id === 'inputForm:submit_button') {
-//                         document.getElementById("inputForm:submit_button").disabled = false;
-//                         drawPoints();
-//                     }
-//                     count2 = 0;
-//                     count1 = 0;
-//                 });
-//             }
-//         }
-//     });
-//
-//     drawPoints();
-//
-//     console.log(
-//         mouseX - graphRect.left,
-//         mouseY - graphRect.top,
-//         seX / height * 5,
-//         seY / height * 5
-//     );
-// });
+graph.addEventListener("mousedown", function (e) {
+    // document.getElementById("inputForm:submit_button").disabled = true;
+
+    var mouseX = parseFloat(e.clientX);
+    var mouseY = parseFloat(e.clientY);
+    var graphRect = graph.getBoundingClientRect();
+    var seX = (mouseX - graphRect.left - graph.width / 2) / height * 5;
+    var seY = -(mouseY - graphRect.top - graph.height / 2) / height * 5;
+
+    document.getElementById("inputForm:x_value").value = seX;
+    document.getElementById("inputForm:yValue").value = seY;
+
+    document.getElementById("inputForm:x_value").dispatchEvent(new Event('change'));
+    document.getElementById("inputForm:yValue").dispatchEvent(new Event('change'));
+
+    let count1 = 0;
+    let count2 = 0;
+    document.getElementById("inputForm:submit_button").dispatchEvent(new Event('click'));
+
+    faces.ajax.addOnEvent(function (data) {
+        drawPoints();
+    });
+
+    drawPoints();
+
+    console.log(
+        mouseX - graphRect.left,
+        mouseY - graphRect.top,
+        seX / height * 5,
+        seY / height * 5
+    );
+});
 
 
 document.getElementById("resultTable").addEventListener("change", function() {

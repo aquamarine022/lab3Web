@@ -32,7 +32,11 @@
                 <f:selectItem itemValue="3.0" itemLabel="3.0"/>
                 <f:selectItem itemValue="4.0" itemLabel="4.0"/>
                 <f:selectItem itemValue="5.0" itemLabel="5.0"/>
+                <f:ajax event="change" render="x_value" />
             </p:selectOneRadio>
+            <h:inputText class="input_x" id="x_value" value="#{pointBean.x}" required="true" style="display: none">
+                <f:validateDoubleRange minimum="-5.0" maximum="5.0" />
+            </h:inputText>
         </h:panelGrid>
         <h:panelGrid columns="2" style="margin-bottom: 20px;">
             <h:outputLabel for="yValue" value="Введите Y:" />
@@ -49,8 +53,8 @@
             </p:inputText>
         </h:panelGrid>
 
-        <h:commandButton value="Отправить">
-            <f:ajax execute="@form" listener="#{formBean.processForm(pointBean)}" render="resultTable" oncomplete="getValuesFromTable()"/>
+        <h:commandButton id="submit_button" value="Отправить">
+            <f:ajax execute="@form" listener="#{formBean.processForm(pointBean)}" event="click" render="resultTable"/>
         </h:commandButton>
     </h:form>
         <div id="graph_div">
@@ -94,7 +98,6 @@
             </h:outputText>
         </h:column>
     </h:dataTable>
-    <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/graph.js"></script>
 <!--    <h:outputScript  name="js/graph.js"/>-->
 </h:body>
